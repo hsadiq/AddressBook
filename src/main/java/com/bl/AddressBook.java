@@ -1,92 +1,102 @@
 package com.bl;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
-class Details{
+
+public class AddressBook {
     private String First_Name;
     private String Last_Name;
     private int Phone_Number;
     private String Email_id;
-    private String Address;
-    private String City;
 
-
-    public String getFirst_Name() {
-        return First_Name;
-    }
-
-    public void setFirst_Name(String first_Name) {
+    public AddressBook(String first_Name, String last_Name, int phone_Number, String email_id, String address, String city) {
         First_Name = first_Name;
-    }
-
-    public String getLast_Name() {
-        return Last_Name;
-    }
-
-    public void setLast_Name(String last_Name) {
         Last_Name = last_Name;
-    }
-
-    public int getPhone_Number() {
-        return Phone_Number;
-    }
-
-    public void setPhone_Number(int phone_Number) {
         Phone_Number = phone_Number;
-    }
-
-    public String getEmail_id() {
-        return Email_id;
-    }
-
-    public void setEmail_id(String email_id) {
         Email_id = email_id;
-    }
-
-    public String getAddress() {
-        return Address;
-    }
-
-    public void setAddress(String address) {
         Address = address;
-    }
-
-    public String getCity() {
-        return City;
-    }
-
-    public void setCity(String city) {
         City = city;
     }
 
-    public String getState() {
-        return State;
+    private String Address;
+    private String City;
+
+    public AddressBook() {
     }
 
-    public void setState(String state) {
-        State = state;
-    }
+        public String getFirst_Name() {
+            return First_Name;
+        }
 
-    public int getZip_Code() {
-        return Zip_Code;
-    }
+        public void setFirst_Name(String first_Name) {
+            First_Name = first_Name;
+        }
 
-    public void setZip_Code(int zip_Code) {
-        Zip_Code = zip_Code;
-    }
+        public String getLast_Name() {
+            return Last_Name;
+        }
 
-    private String State;
-    private int Zip_Code;
-}
+        public void setLast_Name(String last_Name) {
+            Last_Name = last_Name;
+        }
 
-public class AddressBook {
-    private ArrayList<Details> Details;
+        public double getPhone_Number() {
+            return Phone_Number;
+        }
+
+        public void setPhone_Number(double phone_Number) {
+            this.Phone_Number = (int) phone_Number;
+        }
+
+        public String getEmail_id() {
+            return Email_id;
+        }
+
+        public void setEmail_id(String email_id) {
+            Email_id = email_id;
+        }
+
+        public String getAddress() {
+            return Address;
+        }
+
+        public void setAddress(String address) {
+            Address = address;
+        }
+
+        public String getCity() {
+            return City;
+        }
+
+        public void setCity(String city) {
+            City = city;
+        }
+
+        public String getState() {
+            return State;
+        }
+
+        public void setState(String state) {
+            State = state;
+        }
+
+        public int getZip_Code() {
+            return Zip_Code;
+        }
+
+        public void setZip_Code(int zip_Code) {
+            Zip_Code = zip_Code;
+        }
+
+        private String State;
+        private int Zip_Code;
+
+
+
     public static void main(String[] args) {
         System.out.println("Welcome To Address Book Programme");
         Scanner ab = new Scanner(System.in);
         // Creating The First Contact
-        Details a = new Details();
         System.out.println("Enter Your First Name: ");
         String first_name = ab.nextLine();
         System.out.println("Enter Your Last Name: ");
@@ -100,7 +110,7 @@ public class AddressBook {
         System.out.println("Enter Your Email: ");
         String email = ab.nextLine();
         System.out.println("Enter Your Mobile Number: ");
-        int phone_number = ab.nextInt();
+        double phone_number = ab.nextDouble();
         System.out.println("Enter Your Zip Code: ");
         int zip_code = ab.nextInt();
 
@@ -130,4 +140,3 @@ public class AddressBook {
 
     }
 }
-//added to git
