@@ -56,9 +56,28 @@ public class AddContact {
                         System.out.println(addr);
                     }
                     System.out.println("*************");
+                    break;
 
+                case 3:
+                    boolean found = false;
+                    System.out.println("Enter serial number to search: ");
+                    srnum = s1.nextInt();
+                    System.out.println("*************");
+                    i = a.iterator();
+                    while (i.hasNext()) {
+                        AddressBook addr = i.next();
+                        if (addr.getSrnum() == srnum) {
+                            System.out.println(addr);
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("Entered Number Record Not matched");
+                    }
                     System.out.println("*************");
                     break;
+
+
             }
         } while (ch != 0);
 
