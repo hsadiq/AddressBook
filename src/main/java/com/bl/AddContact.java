@@ -77,6 +77,26 @@ public class AddContact {
                     System.out.println("*************");
                     break;
 
+                case 4:
+                    found = false;
+                    System.out.println("Enter serial number to delete: ");
+                    srnum = s1.nextInt();
+                    System.out.println("*************");
+                    i = a.iterator();
+                    while (i.hasNext()) {
+                        AddressBook addr = i.next();
+                        if (addr.getSrnum() == srnum) {
+                            i.remove();
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("Entered Name Record Not matched");
+                    } else {
+                        System.out.println("Record Deleted Successfully");
+                    }
+                    System.out.println("*************");
+                    break;
 
             }
         } while (ch != 0);
