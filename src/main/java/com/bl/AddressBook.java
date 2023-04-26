@@ -9,7 +9,7 @@ public class AddressBook {
     private int Phone_Number;
     private String Email_id;
 
-    public AddressBook(String first_Name, String last_Name, int phone_Number, String email_id, String address, String city) {
+    public AddressBook(int Srnum,String first_Name, String last_Name, int phone_Number, String email_id, String address, String city) {
         First_Name = first_Name;
         Last_Name = last_Name;
         Phone_Number = phone_Number;
@@ -21,9 +21,19 @@ public class AddressBook {
     private String Address;
     private String City;
 
-    public AddressBook() {
+    public AddressBook(int srnum, String first_name, String last_name, String address, String state, int zip_code, long phone_number, String email_id) {
     }
 
+
+    public int getSrnum() {
+        return Srnum;
+    }
+
+    public void setSrnum(int srnum) {
+        this.Srnum = srnum;
+    }
+
+    private int Srnum;
         public String getFirst_Name() {
             return First_Name;
         }
@@ -44,7 +54,7 @@ public class AddressBook {
             return Phone_Number;
         }
 
-        public void setPhone_Number(double phone_Number) {
+        public void setPhone_Number(long phone_Number) {
             this.Phone_Number = (int) phone_Number;
         }
 
@@ -108,9 +118,9 @@ public class AddressBook {
         System.out.println("Enter Your State: ");
         String state = ab.nextLine();
         System.out.println("Enter Your Email: ");
-        String email = ab.nextLine();
+        long email = ab.nextLong();
         System.out.println("Enter Your Mobile Number: ");
-        double phone_number = ab.nextDouble();
+        long phone_number = ab.nextLong();
         System.out.println("Enter Your Zip Code: ");
         int zip_code = ab.nextInt();
 
