@@ -98,6 +98,42 @@ public class AddContact {
                     System.out.println("*************");
                     break;
 
+                case 5:
+                    found = false;
+                    System.out.println("Enter serial number to update: ");
+                    srnum = s1.nextInt();
+                    System.out.println("*************");
+                    // i = a.iterator();
+                    ListIterator<AddressBook> li = a.listIterator();
+                    while (li.hasNext()) {
+                        AddressBook addr = li.next();
+                        if (addr.getSrnum() == srnum) {
+                            System.out.print("Enter new first name: ");
+                            first_name = sc.nextLine();
+                            System.out.print("Enter new last name: ");
+                            last_name = sc.nextLine();
+                            System.out.print("Enter new address: ");
+                            address = sc.nextLine();
+                            System.out.print("Enter new state: ");
+                            state = sc.nextLine();
+                            System.out.print("Enter new zip: ");
+                            zip_code = sc.nextInt();
+                            System.out.print("Enter new phone: ");
+                            phone_number = sc.nextLong();
+                            System.out.print("Enter new email: ");
+                            email_id = sc.nextLine();
+                            li.set(new AddressBook(srnum, first_name, last_name, address, state, zip_code, phone_number, email_id));
+                            found = true;
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("Entered Number Record Not matched");
+                    } else {
+                        System.out.println("Record Updated Successfully");
+                    }
+                    System.out.println("*************");
+                    break;
+
             }
         } while (ch != 0);
 
