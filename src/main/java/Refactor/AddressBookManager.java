@@ -3,18 +3,28 @@ package Refactor;
 import java.util.*;
 
 public class AddressBookManager {
-    private final Map<String, List<AddressBook>> addressBookMap;
-
-    public AddressBookManager() {
-        addressBookMap = new HashMap<>();
-    }
+    private final Map<String, List<AddressBook>> addressBookMap = new HashMap<>();
 
     public void addContact(AddressBook contact) {
         String city = contact.getCity();
-        List<AddressBook> contacts = addressBookMap.getOrDefault(city, new ArrayList<>());
-        contacts.add(contact);
-        addressBookMap.put(city, contacts);
-        System.out.println("Contact Added Successfully");
+        String state = contact.getState();
+
+        if (addressBookMap.containsKey(city)) {
+            addressBookMap.get(city).add(contact);
+        } else {
+            List<AddressBook> cityContacts = new ArrayList<>();
+            cityContacts.add(contact);
+            addressBookMap.put(city, cityContacts);
+        }
+
+
+        if (addressBookMap.containsKey(state)) {
+            addressBookMap.get(state).add(contact);
+        } else {
+            List<AddressBook> stateContacts = new ArrayList<>();
+            stateContacts.add(contact);
+            addressBookMap.put(state, stateContacts);
+        }
     }
 
     public void displayContacts() {
@@ -29,11 +39,12 @@ public class AddressBookManager {
         }
     }
 
-    public void searchContact(String city) {
-        List<AddressBook> contacts = addressBookMap.get(city);
+    public void searchByState(String state) {
+        List<AddressBook> contacts = addressBookMap.get(state);
         if (contacts == null) {
-            System.out.println("No contact found in " + city);
+            System.out.println("No contact found in ");
         } else {
+            System.out.println("Contact in " + ":");
             for (AddressBook contact : contacts) {
                 System.out.println(contact);
             }
@@ -79,11 +90,13 @@ public class AddressBookManager {
 
         int choice;
         do {
-            System.out.println("Enter your choice:");
             System.out.println("1. Add contact");
             System.out.println("2. Display contacts");
             System.out.println("3. Search by city");
             System.out.println("4. Deleting Contact");
+            System.out.println("5. Search by State");
+            System.out.println("0. Exit from AddressBook");
+            System.out.print("Enter your choice:");
             choice = sc.nextInt();
 
             switch (choice) {
@@ -119,6 +132,11 @@ public class AddressBookManager {
                     System.out.println("Enter the First Name");
                     String remove = sc.next();
                     addressBookManager.deleteContact(remove);
+                    break;
+                case 5:
+                    System.out.println("Enter State to Search");
+                    String searchState = sc.next();
+                    addressBookManager.searchByState(searchState);
                 case 0:
                     System.out.println("Exiting program...");
                     break;
