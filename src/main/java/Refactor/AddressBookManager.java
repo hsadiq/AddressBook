@@ -1,10 +1,12 @@
 package Refactor;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBookManager {
     private final Map<String, List<AddressBook>> addressBookMap = new HashMap<>();
 
+    Scanner sc = new Scanner(System.in);
     public void addContact(AddressBook contact) {
         String city = contact.getCity();
         String state = contact.getState();
@@ -39,26 +41,30 @@ public class AddressBookManager {
         }
     }
 
-    public void searchByState(String state) {
-        List<AddressBook> contacts = addressBookMap.get(state);
-        if (contacts == null) {
-            System.out.println("No contact found in ");
+    public void searchByState() {
+        System.out.println("Enter State to Search");
+        String state = sc.next();
+        List<AddressBook> contacts = addressBookMap.values().stream()
+                .flatMap(List::stream)
+                .filter(contact -> contact.getState().equalsIgnoreCase(state))
+                .collect(Collectors.toList());
+        if (contacts.isEmpty()) {
+            System.out.println("No contacts found in " + state);
         } else {
-            System.out.println("Contact in " + ":");
-            for (AddressBook contact : contacts) {
-                System.out.println(contact);
-            }
+            contacts.forEach(p -> System.out.println(p.getFirstName()));
         }
     }
-    public void searchByCity(String city) {
-        List<AddressBook> contacts = addressBookMap.get(city);
-        if (contacts == null || contacts.isEmpty()) {
+    public void searchByCity() {
+        System.out.println("Enter city to search:");
+        String city = sc.next();
+        List<AddressBook> contacts = addressBookMap.values().stream()
+                .flatMap(List::stream)
+                .filter(contact -> contact.getCity().equalsIgnoreCase(city))
+                .collect(Collectors.toList());
+        if (contacts.isEmpty()) {
             System.out.println("No contacts found in " + city);
         } else {
-            System.out.println("Contacts in " + city + ":");
-            for (AddressBook contact : contacts) {
-                System.out.println(contact);
-            }
+            contacts.forEach(p -> System.out.println(p.getFirstName()));
         }
     }
 
@@ -124,9 +130,7 @@ public class AddressBookManager {
                     addressBookManager.displayContacts();
                     break;
                 case 3:
-                    System.out.println("Enter city to search:");
-                    String searchCity = sc.next();
-                    addressBookManager.searchByCity(searchCity);
+                    addressBookManager.searchByCity();
                     break;
                 case 4:
                     System.out.println("Enter the First Name");
@@ -134,9 +138,7 @@ public class AddressBookManager {
                     addressBookManager.deleteContact(remove);
                     break;
                 case 5:
-                    System.out.println("Enter State to Search");
-                    String searchState = sc.next();
-                    addressBookManager.searchByState(searchState);
+                    addressBookManager.searchByState();
                 case 0:
                     System.out.println("Exiting program...");
                     break;
