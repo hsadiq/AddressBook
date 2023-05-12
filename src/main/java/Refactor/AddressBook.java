@@ -1,10 +1,37 @@
 package Refactor;
 
-public class AddressBook {
+import java.util.ArrayDeque;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class AddressBook implements Comparable<AddressBook> {
+
+    private String name;
+    private String phoneNumber;
+    private String email;
+    private String city;
+
+
+    // constructor, getters, and setters
+
+    @Override
+    public int compareTo(AddressBook other) {
+        return this.name.compareTo(other.getName());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+    public String getFirstName() {
+        return firstName;
+    }
+
     private String firstName;
     private String lastName;
     private String address;
-    private String city;
     private String state;
     private int zipcode;
     private long phonenum;
@@ -21,9 +48,7 @@ public class AddressBook {
         this.emailId = emailId;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
+
 
     public String getLastName() {
         return lastName;
@@ -87,7 +112,7 @@ public class AddressBook {
 
     @Override
     public String toString() {
-        return "First Name: " + firstName + ", Last Name: " + lastName + ", Address: " + address + ", City: " + city
-                + ", State: " + state + ", Zipcode: " + zipcode + ", Phone Number: " + phonenum + ", Email: " + emailId;
+        return "[" + firstName + ", " + lastName + ",  " + address + ", " + city
+                + ", " + state + ", " + zipcode + ", " + phonenum + ", " + emailId + "]";
     }
 }

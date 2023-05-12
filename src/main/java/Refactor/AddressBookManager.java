@@ -89,6 +89,14 @@ public class AddressBookManager {
             System.out.println("Contact not found!");
         }
     }
+    public void SortBook(){
+            List<String> contacts = addressBookMap.values().stream()
+                    .flatMap(List::stream)
+                    .sorted(Comparator.comparing(AddressBook::getFirstName))
+                    .map(AddressBook::getFirstName)
+                    .collect(Collectors.toList());
+            contacts.stream().forEach(System.out::println);
+        }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -101,6 +109,7 @@ public class AddressBookManager {
             System.out.println("3. Search by city");
             System.out.println("4. Deleting Contact");
             System.out.println("5. Search by State");
+            System.out.println("6. Get Sorted List");
             System.out.println("0. Exit from AddressBook");
             System.out.print("Enter your choice:");
             choice = sc.nextInt();
@@ -139,6 +148,9 @@ public class AddressBookManager {
                     break;
                 case 5:
                     addressBookManager.searchByState();
+                    break;
+                case 6:
+                    addressBookManager.SortBook();
                 case 0:
                     System.out.println("Exiting program...");
                     break;
