@@ -5,6 +5,7 @@ import java.util.*;
 public class AddressBookManager {
     private final Map<String, List<AddressBook>> addressBookMap = new HashMap<>();
 
+    Scanner sc = new Scanner(System.in);
     public void addContact(AddressBook contact) {
         String city = contact.getCity();
         String state = contact.getState();
@@ -62,6 +63,25 @@ public class AddressBookManager {
         }
     }
 
+    public void countCity(){
+        System.out.println("Enter City");
+        String city = sc.next();
+        long count = addressBookMap.values().stream()
+                .flatMap(List::stream)
+                .filter(contact -> contact.getCity().equalsIgnoreCase(city))
+                .count();
+        System.out.println("Number of Contact In " + city + " = " + count);
+    }
+
+    public void countState(){
+        String state = sc.next();
+        long count = addressBookMap.values().stream().
+                flatMap(List::stream)
+                .filter(states -> states.getState().equalsIgnoreCase(state))
+                .count();
+        System.out.println("Number of Contact In " + state + " = " + count);
+    }
+
     public void deleteContact(String firstName) {
         boolean removed = false;
         for (String city : addressBookMap.keySet()) {
@@ -95,6 +115,8 @@ public class AddressBookManager {
             System.out.println("3. Search by city");
             System.out.println("4. Deleting Contact");
             System.out.println("5. Search by State");
+            System.out.println("6. Total in city");
+            System.out.println("7. Total in State");
             System.out.println("0. Exit from AddressBook");
             System.out.print("Enter your choice:");
             choice = sc.nextInt();
@@ -137,6 +159,13 @@ public class AddressBookManager {
                     System.out.println("Enter State to Search");
                     String searchState = sc.next();
                     addressBookManager.searchByState(searchState);
+                    break;
+                case 6:
+                    addressBookManager.countCity();
+                    break;
+                case 7:
+                    addressBookManager.countState();
+                    break;
                 case 0:
                     System.out.println("Exiting program...");
                     break;
