@@ -41,31 +41,46 @@ public class AddressBookManager {
         }
     }
 
-    public void searchByState() {
-        System.out.println("Enter State to Search");
-        String state = sc.next();
-        List<AddressBook> contacts = addressBookMap.values().stream()
-                .flatMap(List::stream)
-                .filter(contact -> contact.getState().equalsIgnoreCase(state))
-                .collect(Collectors.toList());
-        if (contacts.isEmpty()) {
-            System.out.println("No contacts found in " + state);
+    public void searchByState(String state) {
+        List<AddressBook> contacts = addressBookMap.get(state);
+        if (contacts == null) {
+            System.out.println("No contact found in ");
         } else {
-            contacts.forEach(p -> System.out.println(p.getFirstName()));
+            System.out.println("Contact in " + ":");
+            for (AddressBook contact : contacts) {
+                System.out.println(contact);
+            }
         }
     }
-    public void searchByCity() {
-        System.out.println("Enter city to search:");
-        String city = sc.next();
-        List<AddressBook> contacts = addressBookMap.values().stream()
-                .flatMap(List::stream)
-                .filter(contact -> contact.getCity().equalsIgnoreCase(city))
-                .collect(Collectors.toList());
-        if (contacts.isEmpty()) {
+    public void searchByCity(String city) {
+        List<AddressBook> contacts = addressBookMap.get(city);
+        if (contacts == null || contacts.isEmpty()) {
             System.out.println("No contacts found in " + city);
         } else {
-            contacts.forEach(p -> System.out.println(p.getFirstName()));
+            System.out.println("Contacts in " + city + ":");
+            for (AddressBook contact : contacts) {
+                System.out.println(contact);
+            }
         }
+    }
+
+    public void countCity(){
+        System.out.println("Enter City");
+        String city = sc.next();
+        long count = addressBookMap.values().stream()
+                .flatMap(List::stream)
+                .filter(contact -> contact.getCity().equalsIgnoreCase(city))
+                .count();
+        System.out.println("Number of Contact In " + city + " = " + count);
+    }
+
+    public void countState(){
+        String state = sc.next();
+        long count = addressBookMap.values().stream().
+                flatMap(List::stream)
+                .filter(states -> states.getState().equalsIgnoreCase(state))
+                .count();
+        System.out.println("Number of Contact In " + state + " = " + count);
     }
 
     public void deleteContact(String firstName) {
@@ -101,6 +116,8 @@ public class AddressBookManager {
             System.out.println("3. Search by city");
             System.out.println("4. Deleting Contact");
             System.out.println("5. Search by State");
+            System.out.println("6. Total in city");
+            System.out.println("7. Total in State");
             System.out.println("0. Exit from AddressBook");
             System.out.print("Enter your choice:");
             choice = sc.nextInt();
@@ -130,7 +147,9 @@ public class AddressBookManager {
                     addressBookManager.displayContacts();
                     break;
                 case 3:
-                    addressBookManager.searchByCity();
+                    System.out.println("Enter city to search:");
+                    String searchCity = sc.next();
+                    addressBookManager.searchByCity(searchCity);
                     break;
                 case 4:
                     System.out.println("Enter the First Name");
@@ -138,7 +157,16 @@ public class AddressBookManager {
                     addressBookManager.deleteContact(remove);
                     break;
                 case 5:
-                    addressBookManager.searchByState();
+                    System.out.println("Enter State to Search");
+                    String searchState = sc.next();
+                    addressBookManager.searchByState(searchState);
+                    break;
+                case 6:
+                    addressBookManager.countCity();
+                    break;
+                case 7:
+                    addressBookManager.countState();
+                    break;
                 case 0:
                     System.out.println("Exiting program...");
                     break;
