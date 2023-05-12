@@ -64,7 +64,7 @@ public class AddressBookManager {
     }
 
     public void countCity(){
-        System.out.println("Enter City");
+        System.out.println("Enter City Name:");
         String city = sc.next();
         long count = addressBookMap.values().stream()
                 .flatMap(List::stream)
@@ -74,6 +74,7 @@ public class AddressBookManager {
     }
 
     public void countState(){
+        System.out.println("Enter the State Name:");
         String state = sc.next();
         long count = addressBookMap.values().stream().
                 flatMap(List::stream)
