@@ -87,7 +87,7 @@ public class AddressBook {
 
     @Override
     public String toString() {
-        return "First Name: " + firstName + ", Last Name: " + lastName + ", Address: " + address + ", City: " + city
-                + ", State: " + state + ", Zipcode: " + zipcode + ", Phone Number: " + phonenum + ", Email: " + emailId;
+        return "["+"First Name: " + firstName + ", Last Name: " + lastName + ", Address: " + address + ", City: " + city
+                + ", State: " + state + ", Zipcode: " + zipcode + ", Phone Number: " + phonenum + ", Email: " + emailId+"]";
     }
 }

@@ -1,7 +1,6 @@
 package Refactor;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class AddressBookManager {
     private final Map<String, List<AddressBook>> addressBookMap = new HashMap<>();
@@ -105,6 +104,39 @@ public class AddressBookManager {
         }
     }
 
+    public void sortContacts(String field) {
+        Comparator<AddressBook> comparator;
+        switch (field.trim().toLowerCase()) {
+            case "city":
+                comparator = Comparator.comparing(AddressBook::getCity);
+                break;
+            case "state":
+                comparator = Comparator.comparing(AddressBook::getState);
+                break;
+            case "zip":
+                comparator = Comparator.comparing(AddressBook::getZipcode);
+                break;
+            default:
+                System.out.println("Invalid field!");
+                return;
+        }
+
+        List<AddressBook> contacts = new ArrayList<>();
+        for (List<AddressBook> cityContacts : addressBookMap.values()) {
+            contacts.addAll(cityContacts);
+        }
+        contacts.sort(comparator);
+
+        System.out.println("Sorted by " + field + ":");
+        contacts.forEach(System.out::println);
+    }
+
+    public void sortContacts() {
+        System.out.println("Sort by (city/state/zip):");
+        String field = sc.next();
+        sortContacts(field);
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         AddressBookManager addressBookManager = new AddressBookManager();
@@ -118,6 +150,7 @@ public class AddressBookManager {
             System.out.println("5. Search by State");
             System.out.println("6. Total in city");
             System.out.println("7. Total in State");
+            System.out.println("8. Sort With Option");
             System.out.println("0. Exit from AddressBook");
             System.out.print("Enter your choice:");
             choice = sc.nextInt();
@@ -167,6 +200,10 @@ public class AddressBookManager {
                 case 7:
                     addressBookManager.countState();
                     break;
+                case 8:
+                    System.out.println("Enter field to sort by (City/State/Zip):");
+                    String field = sc.next();
+                    addressBookManager.sortContacts(field);
                 case 0:
                     System.out.println("Exiting program...");
                     break;
