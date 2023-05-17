@@ -157,41 +157,37 @@ public class AddressBookManager {
         sortContacts(field);
     }
 
-    private void writeContactToFile(AddressBook contact) {
-        String fileName = "AddressBook.txt";
+    public void writeContactToFile(AddressBook contact)  {
+        String fileName = "AddressBookCSV.txt";
         try {
-            FileWriter fileWriter = new FileWriter(fileName, true);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
-
-            bufferedWriter.write(contact.toString());
-            bufferedWriter.newLine();
-
-            bufferedWriter.close();
-            System.out.println("Contact added and written to the file successfully!");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true));
+            bw.write(addressBookMap.toString());
+            bw.newLine();
+            bw.close();
         } catch (IOException e) {
-            System.out.println("Error occurred while writing to the file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
     public void readFromFile() {
-        String fileName = "AddressBook.txt";
+        String fileName = "AddressBookCSV.txt";
         try {
-            FileReader fileReader = new FileReader(fileName);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
             String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(line);
+            while ((line = br.readLine()) != null) {
+                String[] fields = line.split(",");
+                for (String field : fields) {
+                    System.out.print(field.trim() + ", ");
+                }
+                System.out.println();
             }
-
-            bufferedReader.close();
+            br.close();
         } catch (IOException e) {
-            System.out.println("Error occurred while reading the file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         Scanner sc = new Scanner(System.in);
         AddressBookManager addressBookManager = new AddressBookManager();
 

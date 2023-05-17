@@ -90,4 +90,20 @@ public class AddressBook {
         return "["+"First Name: " + firstName + ", Last Name: " + lastName + ", Address: " + address + ", City: " + city
                 + ", State: " + state + ", Zipcode: " + zipcode + ", Phone Number: " + phonenum + ", Email: " + emailId+"]";
     }
+
+    public char[] getZipCode() {
+        return getZipCode();
+    }
+
+    public int setZipCode(char[] zipCode) {
+        return zipcode;
+    }
+
+    public char[] getPhoneNumber() {
+        return new char[0];
+    }
+
+    public CharSequence getEmail() {
+        return emailId;
+    }
 }
