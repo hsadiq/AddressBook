@@ -1,32 +1,50 @@
 package Refactor;
 
 import java.util.*;
+import java.io.*;
 
 public class AddressBookManager {
     private final Map<String, List<AddressBook>> addressBookMap = new HashMap<>();
 
     Scanner sc = new Scanner(System.in);
+    private static AddressBook getContactDetailsFromUser(Scanner scanner) {
+        System.out.println("Enter first name:");
+        String firstName = scanner.next();
+        System.out.println("Enter last name:");
+        String lastName = scanner.next();
+        System.out.println("Enter address:");
+        String address = scanner.next();
+        System.out.println("Enter city:");
+        String city = scanner.next();
+        System.out.println("Enter state:");
+        String state = scanner.next();
+        System.out.println("Enter zip code:");
+        int zipCode = scanner.nextInt();
+        System.out.println("Enter phone number:");
+        long phoneNumber = scanner.nextLong();
+        System.out.println("Enter email:");
+        String email = scanner.next();
+        return new AddressBook(firstName, lastName, address, city, state, zipCode, phoneNumber, email);
+    }
+
     public void addContact(AddressBook contact) {
         String city = contact.getCity();
         String state = contact.getState();
 
-        if (addressBookMap.containsKey(city)) {
-            addressBookMap.get(city).add(contact);
-        } else {
-            List<AddressBook> cityContacts = new ArrayList<>();
-            cityContacts.add(contact);
-            addressBookMap.put(city, cityContacts);
-        }
+        List<AddressBook> cityContacts = addressBookMap.getOrDefault(city, new ArrayList<>());
+        cityContacts.add(contact);
+        addressBookMap.put(city, cityContacts);
 
-
-        if (addressBookMap.containsKey(state)) {
-            addressBookMap.get(state).add(contact);
-        } else {
-            List<AddressBook> stateContacts = new ArrayList<>();
+        List<AddressBook> stateContacts = addressBookMap.getOrDefault(state, new ArrayList<>());
+        if (!city.equals(state)) {
             stateContacts.add(contact);
             addressBookMap.put(state, stateContacts);
         }
+
+        // Write the contact to a file
+        writeContactToFile(contact);
     }
+
 
     public void displayContacts() {
         if (addressBookMap.isEmpty()) {
@@ -137,6 +155,40 @@ public class AddressBookManager {
         sortContacts(field);
     }
 
+    private void writeContactToFile(AddressBook contact) {
+        String fileName = "AddressBook.txt";
+        try {
+            FileWriter fileWriter = new FileWriter(fileName, true);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+
+            bufferedWriter.write(contact.toString());
+            bufferedWriter.newLine();
+
+            bufferedWriter.close();
+            System.out.println("Contact added and written to the file successfully!");
+        } catch (IOException e) {
+            System.out.println("Error occurred while writing to the file: " + e.getMessage());
+        }
+    }
+
+    public void readFromFile() {
+        String fileName = "AddressBook.txt";
+        try {
+            FileReader fileReader = new FileReader(fileName);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            bufferedReader.close();
+        } catch (IOException e) {
+            System.out.println("Error occurred while reading the file: " + e.getMessage());
+        }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         AddressBookManager addressBookManager = new AddressBookManager();
@@ -151,30 +203,16 @@ public class AddressBookManager {
             System.out.println("6. Total in city");
             System.out.println("7. Total in State");
             System.out.println("8. Sort With Option");
+            System.out.println("9. Write contacts to a file");
+            System.out.println("10. Read contacts from a file");
             System.out.println("0. Exit from AddressBook");
             System.out.print("Enter your choice:");
             choice = sc.nextInt();
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter first name:");
-                    String firstName = sc.next();
-                    System.out.println("Enter last name:");
-                    String lastName = sc.next();
-                    System.out.println("Enter address:");
-                    String address = sc.next();
-                    System.out.println("Enter city:");
-                    String city = sc.next();
-                    System.out.println("Enter state:");
-                    String state = sc.next();
-                    System.out.println("Enter zip code:");
-                    int zipCode = sc.nextInt();
-                    System.out.println("Enter phone number:");
-                    long phoneNumber = sc.nextLong();
-                    System.out.println("Enter email:");
-                    String email = sc.next();
-                    AddressBook addressBook = new AddressBook(firstName, lastName, address, city, state, zipCode, phoneNumber, email);
-                    addressBookManager.addContact(addressBook);
+                    AddressBook contactToAdd = getContactDetailsFromUser(sc);
+                    addressBookManager.addContact(contactToAdd);
                     break;
                 case 2:
                     addressBookManager.displayContacts();
@@ -204,9 +242,21 @@ public class AddressBookManager {
                     System.out.println("Enter field to sort by (City/State/Zip):");
                     String field = sc.next();
                     addressBookManager.sortContacts(field);
+                    break;
+
+                case 9:
+                    AddressBook contactToWrite = getContactDetailsFromUser(sc);
+                    addressBookManager.writeContactToFile(contactToWrite);
+                    break;
+
+                case 10:
+                    addressBookManager.readFromFile();
+                    break;
+
                 case 0:
                     System.out.println("Exiting program...");
                     break;
+
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
