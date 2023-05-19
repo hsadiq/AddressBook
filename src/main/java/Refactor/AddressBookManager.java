@@ -201,8 +201,8 @@ public class AddressBookManager {
             System.out.println("6. Total in city");
             System.out.println("7. Total in State");
             System.out.println("8. Sort With Option");
-            System.out.println("9. Write contacts to a file");
-            System.out.println("10. Read contacts from a file");
+            System.out.println("9. Write contacts to Json");
+            System.out.println("10. Read contacts from Json");
             System.out.println("0. Exit from AddressBook");
             System.out.print("Enter your choice:");
             choice = sc.nextInt();
