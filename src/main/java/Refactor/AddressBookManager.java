@@ -158,7 +158,7 @@ public class AddressBookManager {
     }
 
     public void writeContactToFile(AddressBook contact)  {
-        String fileName = "AddressBookCSV.txt";
+        String fileName = "AddressBookCSV.json";
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true));
             bw.write(addressBookMap.toString());
@@ -170,7 +170,7 @@ public class AddressBookManager {
     }
 
     public void readFromFile() {
-        String fileName = "AddressBookCSV.txt";
+        String fileName = "AddressBookCSV.json";
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             String line;
